@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora da Lei de Ohm</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+    .container {
+      width: 350px;
+      padding: 30px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #6e7cfc, #5e92f3);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    h1 {
+      font-size: 24px;
+      color: white;
+      margin-bottom: 20px;
+    }
+    select, input, button {
+      padding: 12px;
+      width: 100%;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    select {
+      background-color: #f0f0f0;
+    }
+    input, button {
+      background-color: #ffffff;
+      color: #555;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #calc-form {
+      display: none;
+      margin-top: 20px;
+    }
+    .field {
+      display: none;
+    }
+    #result {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora da Lei de Ohm</h1>
+    
+    <!-- Menu Inicial -->
+    <p>Escolha o parâmetro que deseja calcular:</p>
+    <select id="calc-choice" onchange="showCalcForm()">
+      <option value="">Selecione...</option>
+      <option value="current">Calcular Corrente (I)</option>
+      <option value="resistance">Calcular Resistência (R)</option>
+      <option value="voltage">Calcular Tensão (V)</option>
+    </select>
+
+    <!-- Formulário de Cálculo -->
+    <div id="calc-form">
+      <div id="voltage-field" class="field">
+        <label for="voltage">Tensão (V):</label>
+        <input type="number" id="voltage" placeholder="Digite a tensão (V)">
+      </div>
+      <div id="resistance-field" class="field">
+        <label for="resistance">Resistência (Ω):</label>
+        <input type="number" id="resistance" placeholder="Digite a resistência (Ω)">
+      </div>
+      <div id="current-field" class="field">
+        <label for="current">Corrente (A):</label>
+        <input type="number" id="current" placeholder="Digite a corrente (A)">
+      </div>
+
+      <button onclick="calculateOhm()">Calcular</button>
+      <p id="result"></p>
+    </div>
+  </div>
+
+  <script>
+    function showCalcForm() {
+      const choice = document.getElementById('calc-choice').value;
+      const form = document.getElementById('calc-form');
+      const voltageField = document.getElementById('voltage-field');
+      const resistanceField = document.getElementById('resistance-field');
+      const currentField = document.getElementById('current-field');
+
+      // Esconde todos os campos inicialmente
+      voltageField.style.display = 'none';
+      resistanceField.style.display = 'none';
+      currentField.style.display = 'none';
+
+      // Exibe os campos de acordo com a escolha
+      if (choice === 'current') {
+        voltageField.style.display = 'block';
+        resistanceField.style.display = 'block';
+      } else if (choice === 'resistance') {
+        voltageField.style.display = 'block';
+        currentField.style.display = 'block';
+      } else if (choice === 'voltage') {
+        resistanceField.style.display = 'block';
+        currentField.style.display = 'block';
+      }
+
+      // Exibe o formulário
+      form.style.display = 'block';
+    }
+
+    function calculateOhm() {
+      const voltage = parseFloat(document.getElementById('voltage').value);
+      const resistance = parseFloat(document.getElementById('resistance').value);
+      const current = parseFloat(document.getElementById('current').value);
+      const resultElement = document.getElementById('result');
+      
+      let result = '';
+
+      // Calcula a corrente
+      if (document.getElementById('calc-choice').value === 'current' && !isNaN(voltage) && !isNaN(resistance)) {
+        result = A corrente é: ${(voltage / resistance).toFixed(2)} A;
+      }
+      // Calcula a resistência
+      else if (document.getElementById('calc-choice').value === 'resistance' && !isNaN(voltage) && !isNaN(current)) {
+        result = A resistência é: ${(voltage / current).toFixed(2)} Ω;
+      }
+      // Calcula a tensão
+      else if (document.getElementById('calc-choice').value === 'voltage' && !isNaN(resistance) && !isNaN(current)) {
+        result = A tensão é: ${(resistance * current).toFixed(2)} V;
+      } else {
+        result = 'Por favor, insira os valores necessários!';
+      }
+
+      resultElement.textContent = result;
+    }
+  </script>
+</body>
+</html>
